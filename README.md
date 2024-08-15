@@ -39,3 +39,21 @@ if(troy.caught(val)) {
   // val's type is narrowed to number
 }
 ```
+
+## INLINE
+
+```typescript
+// val's type is string | Error
+const val = troy(() => {
+  // ...stuff that might throw
+  return "ok";
+});
+```
+
+```typescript
+// val's type is string | Error
+const val = await troy.wrap(async () => {
+  // ...stuff that might throw
+  return "ok";
+});
+```
