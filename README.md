@@ -57,10 +57,3 @@ const val = await troy.wrap(async () => {
   return "ok";
 });
 ```
-
-## VERY EXPLICIT ALIASES
-
-```typescript
-troy.sync  // equivalent to troy(...)
-troy.async // equivalent to troy.wrap(...)
-```

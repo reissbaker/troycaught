@@ -11,8 +11,6 @@ type AsyncTrapFn = <Args, RetVal>(cb: (...args: Args[]) => Promise<RetVal>, ...a
 type CaughtFn = <T>(val: T | Error) => val is Error;
 type TrapUtil = {
   wrap: AsyncTrapFn,
-  async: AsyncTrapFn,
-  sync: TrapFn,
   caught: CaughtFn,
 }
 type Export = TrapFn & TrapUtil;
@@ -40,10 +38,6 @@ function caught<T>(val: T | Error): val is Error {
   return false;
 }
 
-const utils: TrapUtil = {
-  caught, wrap,
-  async: wrap,
-  sync: trap,
-};
+const utils: TrapUtil = { caught, wrap };
 
 export default Object.assign(trap, utils) satisfies Export;
