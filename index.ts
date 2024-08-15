@@ -1,6 +1,6 @@
 class TroyError extends Error {
-  constructor(readonly originalError: unknown) {
-    super(`${originalError}`);
+  constructor(readonly originalError: unknown = 'unknown error') {
+    super(`${originalError}`, {cause: originalError});
     this.name = this.constructor.name;
   }
 }
