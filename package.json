@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "test": "vitest --exclude build",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "main": "build/index.js",
   "types": "build/index.d.ts",
