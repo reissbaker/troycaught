@@ -1,6 +1,7 @@
 class TroyError extends Error {
   constructor(readonly originalError: unknown = 'unknown error') {
-    super(`${originalError}`, {cause: originalError});
+    // @ts-ignore
+    super(`${originalError}`, { cause: originalError });
     this.name = this.constructor.name;
   }
 }
@@ -10,6 +11,8 @@ type AsyncTrapFn = <Args, RetVal>(cb: (...args: Args[]) => Promise<RetVal>, ...a
 type CaughtFn = <T>(val: T | Error) => val is Error;
 type TrapUtil = {
   wrap: AsyncTrapFn,
+  async: AsyncTrapFn,
+  sync: TrapFn,
   caught: CaughtFn,
 }
 type Export = TrapFn & TrapUtil;
@@ -23,21 +26,24 @@ const trap: TrapFn = (cb, ...args) => {
   }
 };
 
+const wrap: AsyncTrapFn = async (cb, ...args) => {
+  try {
+    return await cb(...args);
+  } catch(e) {
+    if(e instanceof Error) return e;
+    return new TroyError(e);
+  }
+};
+
 function caught<T>(val: T | Error): val is Error {
   if(val instanceof Error) return true;
   return false;
 }
 
 const utils: TrapUtil = {
-  caught,
-  wrap: async (cb, ...args) => {
-    try {
-      return await cb(...args);
-    } catch(e) {
-      if(e instanceof Error) return e;
-      return new TroyError(e);
-    }
-  },
+  caught, wrap,
+  async: wrap,
+  sync: trap,
 };
 
 export default Object.assign(trap, utils) satisfies Export;
