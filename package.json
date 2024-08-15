@@ -1,0 +1,23 @@
+{
+  "name": "troycaught",
+  "version": "0.0.1",
+  "description": "try/catch for the golang fan",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc"
+  },
+  "author": "@reissbaker",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  },
+  "files": [
+    "index.ts",
+    "package.json",
+    "tsconfig.json",
+    "/build",
+    "/test"
+  ]
+}
