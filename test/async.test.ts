@@ -23,9 +23,7 @@ it("successfully guards types when errors are thrown", async () => {
   shouldThrow = true;
   const val = await troy.wrap(mayThrow, 5);
   const fn = vi.fn();
-  if(troy.caught(val)) {
-    fn(val.message);
-  }
+  if(troy.caught(val)) fn(val.message);
   expect(fn).toHaveBeenCalledWith("uh oh");
 });
 
@@ -33,10 +31,6 @@ it("successfully guards types when no error is thrown", async () => {
   shouldThrow = false;
   const val = await troy.wrap(mayThrow, 5);
   const fn = vi.fn();
-  if(!troy.caught(val)) {
-    // Prove that this is a number inside this if statement -- if it was an Error, the .valueOf
-    // function wouldn't exist
-    fn(val.valueOf());
-  }
+  if(!troy.caught(val)) fn(val.valueOf());
   expect(fn).toHaveBeenCalledWith(5);
 });
